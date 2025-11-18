@@ -12,6 +12,7 @@
     "db:generate": "prisma generate"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.2",
     "@prisma/client": "^5.7.1",
     "bcryptjs": "^2.4.3",
     "date-fns": "^3.0.6",
