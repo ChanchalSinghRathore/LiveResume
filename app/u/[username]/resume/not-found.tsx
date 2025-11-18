@@ -8,7 +8,7 @@ export default function ResumeNotFound() {
         <FileText className="h-16 w-16 text-primary-medium dark:text-primary-light mx-auto mb-4" />
         <h1 className="text-4xl font-bold text-primary-darkest dark:text-primary-lightest mb-2">Resume Not Found</h1>
         <p className="text-xl text-primary-mediumDark dark:text-primary-light mb-8">
-          This resume doesn't exist or hasn't been created yet.
+          This resume does not exist or has not been created yet.
         </p>
         <Link
           href="/"

@@ -9,7 +9,7 @@ export default async function PublicResumePage({
   params,
 }: {
   params: { username: string }
-}) {
+}) {  
   const user = await prisma.user.findUnique({
     where: { username: params.username },
     include: { resume: true },

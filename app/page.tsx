@@ -1,11 +1,17 @@
-import Link from 'next/link'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
-import { ArrowRight, FileText, Link as LinkIcon, Edit, Share2 } from 'lucide-react'
-import ThemeToggle from '@/components/ThemeToggle'
+import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import {
+  ArrowRight,
+  FileText,
+  Link as LinkIcon,
+  Edit,
+  Share2,
+} from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-lightest dark:from-primary-darkest to-white dark:to-primary-dark">
@@ -13,9 +19,14 @@ export default async function Home() {
       <nav className="border-b border-primary-light/20 dark:border-primary-mediumDark/50 bg-white/80 dark:bg-primary-darkest/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+            <Link
+              href="/"
+              className="flex items-center hover:opacity-80 transition-opacity"
+            >
               <FileText className="h-8 w-8 text-primary-medium dark:text-primary-light" />
-              <span className="ml-2 text-xl font-bold text-primary-darkest dark:text-primary-lightest">Live Resume</span>
+              <span className="ml-2 text-xl font-bold text-primary-darkest dark:text-primary-lightest">
+                Live Resume
+              </span>
             </Link>
             <div className="flex items-center space-x-4">
               <ThemeToggle />
@@ -60,12 +71,15 @@ export default async function Home() {
         <div className="text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-primary-darkest dark:text-primary-lightest mb-6">
             Your Resume,
-            <span className="text-primary-medium dark:text-primary-light"> Live & Dynamic</span>
+            <span className="text-primary-medium dark:text-primary-light">
+              {" "}
+              Live & Dynamic
+            </span>
           </h1>
           <p className="text-xl text-primary-mediumDark dark:text-primary-light mb-8 max-w-3xl mx-auto">
-            Create a single, dynamic resume that updates in real-time. Edit once, 
-            and every public link or PDF always reflects the latest version. 
-            No more manual updates across multiple platforms.
+            Create a single, dynamic resume that updates in real-time. Edit
+            once, and every public link or PDF always reflects the latest
+            version. No more manual updates across multiple platforms.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {!session && (
@@ -107,8 +121,8 @@ export default async function Home() {
               Edit Once, Update Everywhere
             </h3>
             <p className="text-primary-mediumDark dark:text-primary-light">
-              Make changes to your resume in one place, and all your shared links 
-              and PDFs automatically reflect the latest version.
+              Make changes to your resume in one place, and all your shared
+              links and PDFs automatically reflect the latest version.
             </p>
           </div>
 
@@ -120,7 +134,10 @@ export default async function Home() {
               Unique Shareable URL
             </h3>
             <p className="text-primary-mediumDark dark:text-primary-light">
-              Get your own personalized URL like <code className="text-primary-medium dark:text-primary-light bg-primary-lightest dark:bg-primary-mediumDark px-2 py-1 rounded">/u/yourname/resume</code> 
+              Get your own personalized URL like{" "}
+              <code className="text-primary-medium dark:text-primary-light bg-primary-lightest dark:bg-primary-mediumDark px-2 py-1 rounded">
+                /u/yourname/resume
+              </code>
               that you can share with employers and recruiters.
             </p>
           </div>
@@ -133,7 +150,7 @@ export default async function Home() {
               ATS-Friendly PDFs
             </h3>
             <p className="text-primary-mediumDark dark:text-primary-light">
-              Generate clean, professional PDFs with selectable text that work 
+              Generate clean, professional PDFs with selectable text that work
               perfectly with Applicant Tracking Systems.
             </p>
           </div>
@@ -144,34 +161,161 @@ export default async function Home() {
           <h2 className="text-3xl font-bold text-center text-primary-darkest dark:text-primary-lightest mb-12">
             How It Works
           </h2>
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="bg-primary-medium dark:bg-primary-mediumDark text-white dark:text-primary-lightest w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-lg">
+
+          <div className="relative grid md:grid-cols-4 gap-6">
+            {/* Step 1 */}
+            <div className="relative text-center">
+              <div className="bg-primary-medium dark:bg-primary-mediumDark text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-lg">
                 1
               </div>
-              <h3 className="font-semibold mb-2 text-primary-darkest dark:text-primary-lightest">Sign Up</h3>
-              <p className="text-sm text-primary-mediumDark dark:text-primary-light">Create your free account in seconds</p>
+              <h3 className="font-semibold mb-2 text-primary-darkest dark:text-primary-lightest">
+                Sign Up
+              </h3>
+              <p className="text-sm text-primary-mediumDark dark:text-primary-light">
+                Create your free account in seconds
+              </p>
+
+              {/* Arrow to next */}
+              <div className="hiw-connector hidden md:block">
+                <svg
+                  width="300"
+                  height="60"
+                  viewBox="0 0 200 50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <defs>
+                    <marker
+                      id="arrow-end"
+                      viewBox="0 0 10 10"
+                      refX="5"
+                      refY="5"
+                      orient="auto"
+                      markerUnits="strokeWidth"
+                    >
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="Gold" />
+                    </marker>
+                  </defs>
+
+                  <path
+                    d="M 0 25 Q 80 0, 160 25 T 200"
+                    fill="none"
+                    stroke="Gold"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    marker-end="url(#arrow-end)"
+                  />
+                </svg>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="bg-primary-medium dark:bg-primary-mediumDark text-white dark:text-primary-lightest w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-lg">
+
+            {/* Step 2 */}
+            <div className="relative text-center">
+              <div className="bg-primary-medium dark:bg-primary-mediumDark text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-lg">
                 2
               </div>
-              <h3 className="font-semibold mb-2 text-primary-darkest dark:text-primary-lightest">Build Your Resume</h3>
-              <p className="text-sm text-primary-mediumDark dark:text-primary-light">Use our intuitive editor to add your experience</p>
+              <h3 className="font-semibold mb-2 text-primary-darkest dark:text-primary-lightest">
+                Build Your Resume
+              </h3>
+              <p className="text-sm text-primary-mediumDark dark:text-primary-light">
+                Use our intuitive editor to add your experience
+              </p>
+
+              <div className="hiw-connector hidden md:block">
+              <svg
+                  width="300"
+                  height="60"
+                  viewBox="0 0 200 50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <defs>
+                    <marker
+                      id="arrow-end"
+                      viewBox="0 0 10 10"
+                      refX="5"
+                      refY="5"
+                      orient="auto"
+                      markerUnits="strokeWidth"
+                    >
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="Gold" />
+                    </marker>
+                  </defs>
+
+                  <path
+                    d="M 0 25 Q 80 0, 160 25 T 200"
+                    fill="none"
+                    stroke="Gold"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    marker-end="url(#arrow-end)"
+                  />
+                </svg>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="bg-primary-medium dark:bg-primary-mediumDark text-white dark:text-primary-lightest w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-lg">
+
+            {/* Step 3 */}
+            <div className="relative text-center">
+              <div className="bg-primary-medium dark:bg-primary-mediumDark text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-lg">
                 3
               </div>
-              <h3 className="font-semibold mb-2 text-primary-darkest dark:text-primary-lightest">Share Your Link</h3>
-              <p className="text-sm text-primary-mediumDark dark:text-primary-light">Get your unique URL and share it anywhere</p>
+              <h3 className="font-semibold mb-2 text-primary-darkest dark:text-primary-lightest">
+                Share Your Link
+              </h3>
+              <p className="text-sm text-primary-mediumDark dark:text-primary-light">
+                Get your unique URL and share it anywhere
+              </p>
+
+              <div className="hiw-connector hidden md:block">
+                <svg
+                  width="300"
+                  height="60"
+                  viewBox="0 0 200 50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <defs>
+                    <marker
+                      id="arrow-end"
+                      viewBox="0 0 10 10"
+                      refX="5"
+                      refY="5"
+                      orient="auto"
+                      markerUnits="strokeWidth"
+                    >
+                      <path d="M 0 0 L 10 5 L 0 10 z" fill="Gold" />
+                    </marker>
+                  </defs>
+
+                  <path
+                    d="M 0 25 Q 80 0, 160 25 T 200"
+                    fill="none"
+                    stroke="Gold"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    marker-end="url(#arrow-end)"
+                  />
+                </svg>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="bg-primary-medium dark:bg-primary-mediumDark text-white dark:text-primary-lightest w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-lg">
+
+            {/* Step 4 */}
+            <div className="relative text-center">
+              <div className="bg-primary-medium dark:bg-primary-mediumDark text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold shadow-lg">
                 4
               </div>
-              <h3 className="font-semibold mb-2 text-primary-darkest dark:text-primary-lightest">Update Anytime</h3>
-              <p className="text-sm text-primary-mediumDark dark:text-primary-light">Edit your resume and changes go live instantly</p>
+              <h3 className="font-semibold mb-2 text-primary-darkest dark:text-primary-lightest">
+                Update Anytime
+              </h3>
+              <p className="text-sm text-primary-mediumDark dark:text-primary-light">
+                Edit your resume and changes go live instantly
+              </p>
             </div>
           </div>
         </div>
@@ -186,8 +330,5 @@ export default async function Home() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
-
-
-
