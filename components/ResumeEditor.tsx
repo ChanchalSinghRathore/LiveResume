@@ -44,6 +44,7 @@ export default function ResumeEditor({ initialResume }: ResumeEditorProps) {
   })
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   useEffect(() => {
     if (initialResume) {
@@ -82,6 +83,7 @@ export default function ResumeEditor({ initialResume }: ResumeEditorProps) {
   const handleSave = async () => {
     setSaving(true)
     setSaved(false)
+    setSaveError(null)
 
     try {
       const response = await fetch('/api/resume', {
@@ -91,7 +93,8 @@ export default function ResumeEditor({ initialResume }: ResumeEditorProps) {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to save resume')
+        const data = await response.json()
+        throw new Error(data.details ? JSON.stringify(data.details) : data.error || 'Failed to save resume')
       }
 
       const savedResume = await response.json()
@@ -122,8 +125,9 @@ export default function ResumeEditor({ initialResume }: ResumeEditorProps) {
 
       setSaved(true)
       setTimeout(() => setSaved(false), 3000)
-    } catch (error) {
-      alert('Failed to save resume. Please try again.')
+    } catch (error: any) {
+      console.error('Error saving resume:', error)
+      setSaveError(error.message)
     } finally {
       setSaving(false)
     }
@@ -270,18 +274,43 @@ export default function ResumeEditor({ initialResume }: ResumeEditorProps) {
     setResume({ ...resume, projects: updated })
   }
 
+  const addLanguage = () => {
+    setResume({
+      ...resume,
+      languages: [...(resume.languages || []), { name: '', level: '' }],
+    })
+  }
+
+  const removeLanguage = (index: number) => {
+    setResume({
+      ...resume,
+      languages: resume.languages?.filter((_, i) => i !== index) || [],
+    })
+  }
+
+  const updateLanguage = (index: number, field: string, value: string) => {
+    const updated = [...(resume.languages || [])]
+    updated[index] = { ...updated[index], [field]: value }
+    setResume({ ...resume, languages: updated })
+  }
+
   return (
-    <div className="space-y-8">
+    <form onSubmit={(e) => { e.preventDefault(); handleSave(); }} className="space-y-8">
       {/* Save Button */}
-      <div className="flex justify-end">
+      <div className="flex flex-col items-end">
         <button
-          onClick={handleSave}
+          type="submit"
           disabled={saving}
           className="inline-flex items-center px-4 py-2 bg-primary-medium dark:bg-primary-mediumDark text-white dark:text-primary-lightest rounded-lg font-medium hover:bg-primary-mediumDark dark:hover:bg-primary-medium disabled:opacity-50 transition-colors shadow-md hover:shadow-lg"
         >
           <Save className="h-4 w-4 mr-2" />
           {saving ? 'Saving...' : saved ? 'Saved!' : 'Save Changes'}
         </button>
+        {saveError && (
+          <p className="text-red-500 text-sm mt-2 max-w-md text-right break-words">
+            {saveError}
+          </p>
+        )}
       </div>
 
       {/* Personal Information */}
@@ -308,6 +337,12 @@ export default function ResumeEditor({ initialResume }: ResumeEditorProps) {
               required
             />
           </div>
+          {/* ... rest of the inputs ... */}
+          {/* I need to be careful not to replace the whole file content with truncated content */}
+          {/* I will use a smaller range or multiple replaces if needed, but wrapping the whole thing is cleaner if I can match the start/end */}
+          {/* The file is large. I should use start/end lines carefully. */}
+          {/* I'll just replace the opening div with form and closing div with form, and the button type. */}
+
           <div>
             <label className="block text-sm font-medium text-primary-darkest dark:text-primary-lightest mb-2">Phone</label>
             <input
@@ -573,7 +608,7 @@ export default function ResumeEditor({ initialResume }: ResumeEditorProps) {
             <div key={index} className="flex items-center space-x-3">
               <input
                 type="text"
-                value={typeof skill === 'string' ? skill : (skill.name || skill)}
+                value={typeof skill === 'string' ? skill : (skill.name || '')}
                 onChange={(e) => updateSkill(index, 'name', e.target.value)}
                 placeholder="Skill name"
                 className="flex-1 px-4 py-2 border border-primary-medium dark:border-primary-light rounded-lg focus:ring-2 focus:ring-primary-medium dark:focus:ring-primary-light bg-white dark:bg-primary-darkest text-primary-darkest dark:text-primary-lightest"
@@ -759,7 +794,39 @@ export default function ResumeEditor({ initialResume }: ResumeEditorProps) {
           ))}
         </div>
       </section>
-    </div>
+      {/* Languages */}
+      <section>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-primary-darkest dark:text-primary-lightest">Languages</h3>
+          <button
+            onClick={addLanguage}
+            className="inline-flex items-center px-3 py-1.5 text-sm bg-primary-lightest dark:bg-primary-mediumDark text-primary-medium dark:text-primary-light rounded-lg hover:bg-primary-light dark:hover:bg-primary-mediumDark/80 transition-colors"
+          >
+            <Plus className="h-4 w-4 mr-1" />
+            Add Language
+          </button>
+        </div>
+        <div className="space-y-3">
+          {resume.languages?.map((lang, index) => (
+            <div key={index} className="flex items-center space-x-3">
+              <input
+                type="text"
+                value={typeof lang === 'string' ? lang : (lang.name || '')}
+                onChange={(e) => updateLanguage(index, 'name', e.target.value)}
+                placeholder="Language"
+                className="flex-1 px-4 py-2 border border-primary-medium dark:border-primary-light rounded-lg focus:ring-2 focus:ring-primary-medium dark:focus:ring-primary-light bg-white dark:bg-primary-darkest text-primary-darkest dark:text-primary-lightest"
+              />
+              <button
+                onClick={() => removeLanguage(index)}
+                className="text-red-600 hover:text-red-700"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+    </form>
   )
 }
 

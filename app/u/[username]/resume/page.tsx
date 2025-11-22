@@ -186,7 +186,7 @@ export default async function PublicResumePage({
                     key={index}
                     className="px-4 py-2 bg-primary-lightest dark:bg-primary-mediumDark text-primary-medium dark:text-primary-light rounded-lg font-medium border border-primary-light dark:border-primary-mediumDark"
                   >
-                    {skill.name || skill}
+                    {typeof skill === 'string' ? skill : (skill.name || '')}
                   </span>
                 ))}
               </div>
@@ -261,7 +261,7 @@ export default async function PublicResumePage({
                     key={index}
                     className="px-4 py-2 bg-primary-lightest dark:bg-primary-mediumDark text-primary-medium dark:text-primary-light rounded-lg font-medium border border-primary-light dark:border-primary-mediumDark"
                   >
-                    {lang.name || lang} {lang.level && `(${lang.level})`}
+                    {typeof lang === 'string' ? lang : (lang.name || '')} {typeof lang !== 'string' && lang.level && `(${lang.level})`}
                   </span>
                 ))}
               </div>

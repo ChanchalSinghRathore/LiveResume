@@ -7,12 +7,12 @@ import { z } from 'zod'
 const resumeSchema = z.object({
   fullName: z.string().min(1),
   email: z.string().email(),
-  phone: z.string().optional(),
-  location: z.string().optional(),
-  website: z.string().url().optional().or(z.literal('')),
-  linkedin: z.string().url().optional().or(z.literal('')),
-  github: z.string().url().optional().or(z.literal('')),
-  summary: z.string().optional(),
+  phone: z.string().nullish(),
+  location: z.string().nullish(),
+  website: z.string().url().or(z.literal('')).nullish(),
+  linkedin: z.string().url().or(z.literal('')).nullish(),
+  github: z.string().url().or(z.literal('')).nullish(),
+  summary: z.string().nullish(),
   experiences: z.array(z.any()).optional(),
   education: z.array(z.any()).optional(),
   skills: z.array(z.any()).optional(),
@@ -116,6 +116,7 @@ export async function PUT(request: Request) {
     })
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error('Validation error:', JSON.stringify(error.errors, null, 2))
       return NextResponse.json(
         { error: 'Invalid input', details: error.errors },
         { status: 400 }
